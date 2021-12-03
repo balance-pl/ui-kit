@@ -224,8 +224,8 @@ export class Input extends React.Component {
     const { readOnly, onChange, parseValue } = this.props
     let value = this.normalizeValue(event.target.value)
     value = typeof parseValue === 'function'
-    ? parseValue(value)
-    : event.target.value
+      ? parseValue(value)
+      : event.target.value
 
     if (readOnly) {
       return false

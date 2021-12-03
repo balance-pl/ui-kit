@@ -265,8 +265,10 @@ var Input = /*#__PURE__*/function (_React$Component) {
   _proto.handleChange = function handleChange(event) {
     var _this$props5 = this.props,
         readOnly = _this$props5.readOnly,
-        onChange = _this$props5.onChange;
-    var value = this.parseValue(this.normalizeValue(event.target.value));
+        onChange = _this$props5.onChange,
+        parseValue = _this$props5.parseValue;
+    var value = this.normalizeValue(event.target.value);
+    value = typeof parseValue === 'function' ? parseValue(value) : event.target.value;
 
     if (readOnly) {
       return false;
@@ -282,7 +284,7 @@ var Input = /*#__PURE__*/function (_React$Component) {
       state.dropdownVisible = false;
     }
 
-    event.target.value = value;
+    event.target.value = typeof parseValue === 'function' ? parseValue(event.target.value) : event.target.value;
     this.setState(state);
     onChange && onChange(event);
   };
@@ -665,7 +667,7 @@ Input.propTypes = {
   label: _propTypes["default"].any,
   mask: _propTypes["default"].string,
   maskChar: _propTypes["default"].string,
-  parse: _propTypes["default"].object,
+  parseValue: _propTypes["default"].func,
   format: _propTypes["default"].string,
   disabled: _propTypes["default"].bool,
   invalid: _propTypes["default"].bool,
