@@ -67,6 +67,16 @@ var Input = /*#__PURE__*/function (_React$Component) {
     }
   };
 
+  _proto.parseValue = function parseValue(value) {
+    var parse = this.props.parse;
+
+    if (parse) {
+      value = value.replace(parse, '');
+    }
+
+    return value;
+  };
+
   _proto.normalizeValue = function normalizeValue(value) {
     var _this$props = this.props,
         type = _this$props.type,
@@ -256,7 +266,7 @@ var Input = /*#__PURE__*/function (_React$Component) {
     var _this$props5 = this.props,
         readOnly = _this$props5.readOnly,
         onChange = _this$props5.onChange;
-    var value = this.normalizeValue(event.target.value);
+    var value = this.parseValue(this.normalizeValue(event.target.value));
 
     if (readOnly) {
       return false;
@@ -272,6 +282,7 @@ var Input = /*#__PURE__*/function (_React$Component) {
       state.dropdownVisible = false;
     }
 
+    event.target.value = value;
     this.setState(state);
     onChange && onChange(event);
   };

@@ -29,6 +29,16 @@ export class Input extends React.Component {
     }
   }
 
+  parseValue (value) {
+    const { parse } = this.props
+
+    if (parse) {
+      value = value.replace(parse, '')
+    }
+
+    return value
+  }
+
   normalizeValue (value) {
     const { type, format } = this.props
     value = ['string', 'number'].indexOf(typeof value) >= 0 ? String(value) : ''
@@ -212,7 +222,7 @@ export class Input extends React.Component {
 
   handleChange (event) {
     const { readOnly, onChange } = this.props
-    const value = this.normalizeValue(event.target.value)
+    const value = this.parseValue(this.normalizeValue(event.target.value))
 
     if (readOnly) {
       return false
@@ -226,6 +236,7 @@ export class Input extends React.Component {
       state.dropdownVisible = false
     }
 
+    event.target.value = value
     this.setState(state)
     onChange && onChange(event)
   }
