@@ -218,7 +218,7 @@ export class Input extends React.Component {
       return false
     }
 
-    if ( typeof parseValue === 'function') {
+    if (typeof parseValue === 'function') {
       value = parseValue(value)
       event.target.value = parseValue(event.target.value)
     }

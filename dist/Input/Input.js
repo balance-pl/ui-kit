@@ -67,16 +67,6 @@ var Input = /*#__PURE__*/function (_React$Component) {
     }
   };
 
-  _proto.parseValue = function parseValue(value) {
-    var parse = this.props.parse;
-
-    if (parse) {
-      value = value.replace(parse, '');
-    }
-
-    return value;
-  };
-
   _proto.normalizeValue = function normalizeValue(value) {
     var _this$props = this.props,
         type = _this$props.type,
@@ -268,10 +258,14 @@ var Input = /*#__PURE__*/function (_React$Component) {
         onChange = _this$props5.onChange,
         parseValue = _this$props5.parseValue;
     var value = this.normalizeValue(event.target.value);
-    value = typeof parseValue === 'function' ? parseValue(value) : event.target.value;
 
     if (readOnly) {
       return false;
+    }
+
+    if (typeof parseValue === 'function') {
+      value = parseValue(value);
+      event.target.value = parseValue(event.target.value);
     }
 
     var state = {
@@ -284,7 +278,6 @@ var Input = /*#__PURE__*/function (_React$Component) {
       state.dropdownVisible = false;
     }
 
-    event.target.value = typeof parseValue === 'function' ? parseValue(event.target.value) : event.target.value;
     this.setState(state);
     onChange && onChange(event);
   };
