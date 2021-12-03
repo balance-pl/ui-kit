@@ -213,14 +213,15 @@ export class Input extends React.Component {
   handleChange (event) {
     const { readOnly, onChange, parseValue } = this.props
     let value = this.normalizeValue(event.target.value)
-    value = typeof parseValue === 'function'
-      ? parseValue(value)
-      : event.target.value
 
     if (readOnly) {
       return false
     }
 
+    if ( typeof parseValue === 'function') {
+      value = parseValue(value)
+      event.target.value = parseValue(event.target.value)
+    }
     const state = { value }
 
     if (event.type === 'change') {
@@ -229,9 +230,6 @@ export class Input extends React.Component {
       state.dropdownVisible = false
     }
 
-    event.target.value = typeof parseValue === 'function'
-      ? parseValue(event.target.value)
-      : event.target.value
     this.setState(state)
     onChange && onChange(event)
   }
