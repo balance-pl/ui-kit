@@ -665,6 +665,7 @@ Input.propTypes = {
   label: _propTypes["default"].any,
   mask: _propTypes["default"].string,
   maskChar: _propTypes["default"].string,
+  parse: _propTypes["default"].object,
   format: _propTypes["default"].string,
   disabled: _propTypes["default"].bool,
   invalid: _propTypes["default"].bool,

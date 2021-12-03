@@ -616,6 +616,7 @@ Input.propTypes = {
   label: PropTypes.any,
   mask: PropTypes.string,
   maskChar: PropTypes.string,
+  parse: PropTypes.object,
   format: PropTypes.string,
   disabled: PropTypes.bool,
   invalid: PropTypes.bool,
