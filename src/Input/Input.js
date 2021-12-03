@@ -221,8 +221,11 @@ export class Input extends React.Component {
   }
 
   handleChange (event) {
-    const { readOnly, onChange } = this.props
-    const value = this.parseValue(this.normalizeValue(event.target.value))
+    const { readOnly, onChange, parseValue } = this.props
+    let value = this.normalizeValue(event.target.value)
+    value = typeof parseValue === 'function'
+    ? parseValue(value)
+    : event.target.value
 
     if (readOnly) {
       return false
@@ -236,7 +239,9 @@ export class Input extends React.Component {
       state.dropdownVisible = false
     }
 
-    event.target.value = value
+    event.target.value = typeof parseValue === 'function'
+      ? parseValue(event.target.value)
+      : event.target.value
     this.setState(state)
     onChange && onChange(event)
   }
@@ -616,7 +621,7 @@ Input.propTypes = {
   label: PropTypes.any,
   mask: PropTypes.string,
   maskChar: PropTypes.string,
-  parse: PropTypes.object,
+  parseValue: PropTypes.func,
   format: PropTypes.string,
   disabled: PropTypes.bool,
   invalid: PropTypes.bool,
