@@ -29,16 +29,6 @@ export class Input extends React.Component {
     }
   }
 
-  parseValue (value) {
-    const { parse } = this.props
-
-    if (parse) {
-      value = value.replace(parse, '')
-    }
-
-    return value
-  }
-
   normalizeValue (value) {
     const { type, format } = this.props
     value = ['string', 'number'].indexOf(typeof value) >= 0 ? String(value) : ''
