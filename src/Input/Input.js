@@ -211,13 +211,17 @@ export class Input extends React.Component {
   }
 
   handleChange (event) {
-    const { readOnly, onChange } = this.props
-    const value = this.normalizeValue(event.target.value)
+    const { readOnly, onChange, parseValue } = this.props
+    let value = this.normalizeValue(event.target.value)
 
     if (readOnly) {
       return false
     }
 
+    if (typeof parseValue === 'function') {
+      value = parseValue(value)
+      event.target.value = parseValue(event.target.value)
+    }
     const state = { value }
 
     if (event.type === 'change') {
@@ -605,6 +609,7 @@ Input.propTypes = {
   label: PropTypes.any,
   mask: PropTypes.string,
   maskChar: PropTypes.string,
+  parseValue: PropTypes.func,
   format: PropTypes.string,
   disabled: PropTypes.bool,
   invalid: PropTypes.bool,

@@ -255,11 +255,17 @@ var Input = /*#__PURE__*/function (_React$Component) {
   _proto.handleChange = function handleChange(event) {
     var _this$props5 = this.props,
         readOnly = _this$props5.readOnly,
-        onChange = _this$props5.onChange;
+        onChange = _this$props5.onChange,
+        parseValue = _this$props5.parseValue;
     var value = this.normalizeValue(event.target.value);
 
     if (readOnly) {
       return false;
+    }
+
+    if (typeof parseValue === 'function') {
+      value = parseValue(value);
+      event.target.value = parseValue(event.target.value);
     }
 
     var state = {
@@ -654,6 +660,7 @@ Input.propTypes = {
   label: _propTypes["default"].any,
   mask: _propTypes["default"].string,
   maskChar: _propTypes["default"].string,
+  parseValue: _propTypes["default"].func,
   format: _propTypes["default"].string,
   disabled: _propTypes["default"].bool,
   invalid: _propTypes["default"].bool,
